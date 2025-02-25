@@ -38,7 +38,6 @@ class PoetryGame(QWidget):
         user_input = self.full_input.text()
         self.attempt_counter += 1  
 
-        # 检查是否超过尝试次数
         if self.attempt_counter > 10:
             QMessageBox.information(self, "答案", f"超过次数限制，正确答案是：{poem}")
             self.close()  
