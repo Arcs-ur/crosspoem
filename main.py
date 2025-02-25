@@ -175,5 +175,4 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     game = PoetryGame()
     game.show()
-    print(poem)
     sys.exit(app.exec_())
