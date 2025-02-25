@@ -1,9 +1,9 @@
 import sys
 import random
-from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QGridLayout, QHBoxLayout, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QHBoxLayout
 from PyQt5.QtCore import Qt
 
-with open('crosspoem/poem.txt', 'r', encoding='utf-8') as f:
+with open('./poem.txt', 'r', encoding='utf-8') as f:
     poems = f.readlines()
     poem = random.choice(poems).strip() 
 
@@ -11,7 +11,8 @@ class PoetryGame(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.previous_attempts = []  
+        self.previous_attempts = []
+        self.attempt_counter = 0  # 初始化尝试计数器
         self.initUI()
 
     def initUI(self):
@@ -19,9 +20,6 @@ class PoetryGame(QWidget):
         self.setGeometry(100, 100, 400, 300)
 
         layout = QVBoxLayout()
-
-        self.grid_layout = QGridLayout()
-        self.inputs = []
 
         self.full_input = QLineEdit(self)
         self.full_input.setPlaceholderText("请输入完整句子，这句有{}个字".format(len(poem)))
@@ -38,6 +36,13 @@ class PoetryGame(QWidget):
 
     def check_answer(self):
         user_input = self.full_input.text()
+        self.attempt_counter += 1  # 增加尝试计数
+
+        # 检查是否超过尝试次数
+        if self.attempt_counter > 10:
+            QMessageBox.information(self, "答案", f"超过次数限制，正确答案是：{poem}")
+            self.close()  # 关闭窗口
+            return
 
         self.previous_attempts.append(user_input)
 
@@ -71,12 +76,10 @@ class PoetryGame(QWidget):
 
         # 清空输入框以便进行新的尝试
         self.full_input.clear()
-        for input_field in self.inputs:
-            input_field.clear()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     game = PoetryGame()
     game.show()
-    print(poem)
+    print(poem)  # 打印出正确答案，便于调试
     sys.exit(app.exec_())
