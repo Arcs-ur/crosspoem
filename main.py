@@ -12,7 +12,7 @@ class PoetryGame(QWidget):
         super().__init__()
 
         self.previous_attempts = []
-        self.attempt_counter = 0  # 初始化尝试计数器
+        self.attempt_counter = 0  
         self.initUI()
 
     def initUI(self):
@@ -36,12 +36,12 @@ class PoetryGame(QWidget):
 
     def check_answer(self):
         user_input = self.full_input.text()
-        self.attempt_counter += 1  # 增加尝试计数
+        self.attempt_counter += 1  
 
         # 检查是否超过尝试次数
         if self.attempt_counter > 10:
             QMessageBox.information(self, "答案", f"超过次数限制，正确答案是：{poem}")
-            self.close()  # 关闭窗口
+            self.close()  
             return
 
         self.previous_attempts.append(user_input)
@@ -74,12 +74,10 @@ class PoetryGame(QWidget):
         else:
             QMessageBox.warning(self, "结果", "很遗憾，填字错误。请再试一次！")
 
-        # 清空输入框以便进行新的尝试
         self.full_input.clear()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     game = PoetryGame()
     game.show()
-    print(poem)  # 打印出正确答案，便于调试
     sys.exit(app.exec_())
