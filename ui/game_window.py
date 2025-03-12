@@ -21,7 +21,7 @@ class GameWindow(QWidget):
         self.previous_attempts = []
         self.attempt_counter = 0  
         self.correct_guesses = set()  
-        self.time_left = 15  # 设置初始时间为15秒
+        self.time_left = 60  # 设置初始时间为15秒
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_timer)
         self.bert_model = BertSimilarityModel()
@@ -187,7 +187,7 @@ class GameWindow(QWidget):
         self.attempt_counter = 0
         self.previous_attempts.clear()  # 清空尝试记录
         self.correct_guesses.clear()  # 清空正确猜测记录
-        self.time_left = 15  # 重置时间
+        self.time_left = 60  # 重置时间
         self.full_input.setPlaceholderText("请输入完整句子，这句有{}个字".format(len(self.poem_text)))
 
         # 清空尝试的输入框和显示区域
